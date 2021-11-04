@@ -1,27 +1,48 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component,OnDestroy, OnInit } from '@angular/core';
+import  { ElementosService } from './elementos.service';
+
+import { Subject } from 'rxjs';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy, OnInit{
   title = 'Proyecto Angular Consumir JSON';
-  articulos: any = null;
+  elementos: any = null;
 
-  constructor(private http: HttpClient) { }
+
+  // Usamos este disparador porque la búsqueda de la lista de datos puede ser bastante larga,
+  // por lo tanto, nos aseguramos de que los datos se obtengan antes de renderizar
+  dtTrigger: Subject<any> = new Subject<any>();
+
+  dtOptions: DataTables.Settings = {};
+
+  constructor(private elementosService:ElementosService) { }
 
   ngOnInit() {
-    this.http.get("https://www.datos.gov.co/resource/ax5z-5ugh.json")
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 5
+    };
+
+    this.elementosService.consultarJSON()
       .subscribe(
         result => {
-          this.articulos = result;
+          this.elementos = result;
+          this.dtTrigger.next();
         },
         error => {
           console.log('problemas');
         }
       );
   }
+
+  ngOnDestroy(): void {
+    // Dar de baja del evento
+    this.dtTrigger.unsubscribe();
+  }  
 
 }

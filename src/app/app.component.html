@@ -1,16 +1,26 @@
-<div>
-  <h1>Información del Registro de Activos de la Información de Software</h1>
-</div>
-<div *ngIf="articulos!=null; else espera">
-  <table border="1">
-    <tr>
-      <td>Placa</td><td>Descripción</td><td>Dependencia</td>
-    </tr>
-    <tr *ngFor="let art of articulos">
-      <td>{{art.placa}}</td>
-      <td>{{art.descripci_n}}</td>
-      <td>{{art.dependencia}}</td>
-    </tr>
+<div style="color: blue;">
+  <h2> ELEMENTOS DE SOFTWARE </h2>
+   <p>
+    Consumir un recurso JSON,
+     <span style="color: rgb(20, 20, 235);"> Angular.</span>
+   </p>
+   <img src="./assets/imagen_angular.jpg">
+ </div>
+<div style="color: rgb(36, 36, 49);" class="box">
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+    <thead>
+      <tr>
+        <th>CODIGO</th>
+        <th>DESCRIPCIÓN</th>
+        <th>DEPENDENCIA</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ele of elementos">
+        <td>{{ele.placa}}</td>
+        <td>{{ele.descripci_n}}</td>
+        <td>{{ele.dependencia}}</td>
+      </tr>
+    </tbody>
   </table>
 </div>
-<ng-template #espera>Esperando datos...</ng-template>
