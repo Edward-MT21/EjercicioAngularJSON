@@ -1,5 +1,6 @@
 import { Component,OnDestroy, OnInit } from '@angular/core';
 import  { ElementosService } from './elementos.service';
+import {Elemento} from './elemento';
 
 import { Subject } from 'rxjs';
 
@@ -11,7 +12,7 @@ import { Subject } from 'rxjs';
 })
 export class AppComponent implements OnDestroy, OnInit{
   title = 'Proyecto Angular Consumir JSON';
-  elementos: any = null;
+  elementos: Elemento[] = [];
 
 
   // Usamos este disparador porque la búsqueda de la lista de datos puede ser bastante larga,
